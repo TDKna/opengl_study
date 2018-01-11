@@ -180,6 +180,9 @@ bool on_init() {
     glLinkProgram(g_program);
     LOGD("シェーダプログラムリンク：終了");
 
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
     LOGD("シェーダリンク確認：開始");
     GLint linkStatus = GL_FALSE;
     glGetProgramiv(g_program, GL_LINK_STATUS, &linkStatus);
@@ -205,6 +208,7 @@ bool on_init() {
 
 void on_dispose() {
     if (g_program) {
+        glUseProgram(NULL);
         glDeleteProgram(g_program);
         g_program = NULL;
     }
