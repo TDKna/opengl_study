@@ -12,5 +12,7 @@ void on_update();
 void on_draw();
 void on_pause();
 void on_resume();
+void move_camera(int x, int y);
+void rotate_camera(int rotation);
 
 #endif //OPENGL_STUDY_RENDERER_H

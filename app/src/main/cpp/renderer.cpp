@@ -28,6 +28,8 @@ GLuint g_projViewModel;
 glm::mat4 g_matProj;
 // ビュー行列
 glm::mat4 g_matView;
+// モデル行列
+glm::mat4 g_matModel;
 // 回転角度
 float g_rotation = 30.0f;
 
@@ -216,13 +218,13 @@ void on_dispose() {
 
 bool on_surface_changed(int width, int height) {
     // 変換行列の更新
-    g_matProj = glm::perspective(glm::radians(60.0f), (float)width / (float)height, 0.1f, 10.0f);
+    g_aspect = (float)width / (float)height;
+    g_matProj = glm::perspective(glm::radians(g_rotation), (float)width / (float)height, 0.1f, 10.0f);
     g_matView = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     return true;
 }
 
 void on_update() {
-    g_rotation += 0.02f;
 }
 
 void on_draw() {
@@ -247,4 +249,12 @@ void on_pause() {
 }
 
 void on_resume() {
+}
+
+void move_camera(int diffX, int diffY) {
+}
+
+void rotate_camera(int rotation) {
+    g_rotation = (float)rotation;
+    g_matProj = glm::perspective(glm::radians(g_rotation), g_aspect, 0.1f, 10.0f);
 }
