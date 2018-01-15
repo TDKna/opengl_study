@@ -14,6 +14,8 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     static native void nativeOnDrawFrame();
     static native void nativeOnSurfaceCreated();
     static native void nativeOnSurfaceChanged(int width, int height);
+    static native void nativeMoveCamera(float diffX, float diffY);
+    static native void nativeRotateCamera(float rotation);
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {

@@ -29,3 +29,15 @@ Java_gltest_tdkn_com_gltestapplication_MainRenderer_nativeOnDrawFrame(JNIEnv *en
     on_update();
     on_draw();
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_gltest_tdkn_com_gltestapplication_MainRenderer_nativeMoveCamera(JNIEnv *env, jclass type, jfloat diffX, jfloat diffY) {
+    move_camera(diffX, diffY);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_gltest_tdkn_com_gltestapplication_MainRenderer_nativeRotateCamera(JNIEnv *env, jclass type, jfloat rotation) {
+    rotate_camera(rotation);
+}

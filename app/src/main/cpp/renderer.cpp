@@ -218,9 +218,9 @@ void on_dispose() {
 
 bool on_surface_changed(int width, int height) {
     // 変換行列の更新
-    g_aspect = (float)width / (float)height;
-    g_matProj = glm::perspective(glm::radians(g_rotation), (float)width / (float)height, 0.1f, 10.0f);
-    g_matView = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    g_matProj = glm::perspective(glm::radians(60.0f), (float)width / (float)height, 0.1f, 20.0f);
+    g_matView = glm::lookAt(glm::vec3(0.0f, 2.0f, 12.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    g_matModel = glm::mat4();
     return true;
 }
 
@@ -234,8 +234,7 @@ void on_draw() {
 
     glUseProgram(g_program);
 
-    glm::mat4 matModel = glm::rotate(glm::mat4(), g_rotation, glm::vec3(0.0f, 1.0f, 1.0f));
-    glm::mat4 matProjView = g_matProj * g_matView * matModel;
+    glm::mat4 matProjView = g_matProj * g_matView * g_matModel;
 
     glUniformMatrix4fv(g_projViewModel, 1, 0, &(matProjView[0][0]));
 
@@ -251,10 +250,10 @@ void on_pause() {
 void on_resume() {
 }
 
-void move_camera(int diffX, int diffY) {
+void move_camera(float diffX, float diffY) {
+    g_matView = glm::translate(g_matView, glm::vec3(diffX, diffY, 0.0f));
 }
 
-void rotate_camera(int rotation) {
-    g_rotation = (float)rotation;
-    g_matProj = glm::perspective(glm::radians(g_rotation), g_aspect, 0.1f, 10.0f);
+void rotate_camera(float rotation) {
+    g_matView = glm::rotate(glm::mat4(), glm::radians(rotation), glm::vec3(1, 0, 0)) * g_matView;
 }
